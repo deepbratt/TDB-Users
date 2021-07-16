@@ -6,8 +6,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - http:
-      paths:
+    - http:
+        paths:
         - path: /users
           pathType: Prefix
           backend:
