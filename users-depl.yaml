@@ -16,8 +16,8 @@ spec:
         - name: users
           image: magnit002/tezdeals-users
           imagePullPolicy: Always
-      imagePullSecrets:
-        name: dockersecret
+          imagePullSecrets:
+           name: dockersecret
 ---
 apiVersion: v1
 kind: Service
