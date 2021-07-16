@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+        - path: /users
+          pathType: Prefix
+          backend:
+            service:
+              name: users-srv
+              port:
+                number: 3000
+        - path: /bookings
+          pathType: Prefix
+          backend:
+            service:
+              name: bookings-srv
+              port:
+                number: 3002 
+        - path: /categories
+          pathType: Prefix
+          backend:
+            service:
+              name: categories-srv
+              port:
+                number: 3001   
+        - path: /ads
+          pathType: Prefix 
+          backend:
+            service:
+              name: ads-srv
+              port:
+                number: 3003                        
