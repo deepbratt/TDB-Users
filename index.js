@@ -25,7 +25,7 @@ app.get('/users', (req, res) => {
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
 	console.log(`listening`);
 	const res = await axios.get('http://bookings-srv:3002/bookings');
 	console.log(res);
