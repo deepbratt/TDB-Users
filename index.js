@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json()); // body parser (reading data from body to req.body)
 app.use(cookieParser()); // cookie parser (reading data from cookie to req.cookie)
 
-app.get('/users', (req, res) => {
+app.get('/v1/users', (req, res) => {
 	res.status(200).json({
 		title: 'users',
 	});
