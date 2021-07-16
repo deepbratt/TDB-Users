@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: tezdeals-users
+          image: magnit002/tezdeals-users
 ---
 apiVersion: v1
 kind: Service
