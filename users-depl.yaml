@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: magnit002/tezdeals-users
+          image: docker.io/magnit002/tezdeals-users
           imagePullPolicy: Always
 ---
 apiVersion: v1
