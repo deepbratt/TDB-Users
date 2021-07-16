@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const axios=require('axios')
 //const {c}= require('tdb_globalutils')
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
@@ -22,6 +23,10 @@ app.get('/users', (req, res) => {
 	});
 });
 
+
+
 app.listen(PORT, () => {
 	console.log(`listening`);
+	const res = await axios.get('http://bookings-srv:3002/bookings');
+	console.log(res);
 });
