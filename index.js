@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const axios=require('axios')
+const axios = require('axios');
 //const {c}= require('tdb_globalutils')
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
@@ -22,8 +22,11 @@ app.get('/v1/users', (req, res) => {
 		title: 'users',
 	});
 });
-
-
+app.get('/v1/users/abx', (req, res) => {
+	res.status(200).json({
+		title: 'user abc',
+	});
+});
 
 app.listen(PORT, async () => {
 	console.log(`listening`);
