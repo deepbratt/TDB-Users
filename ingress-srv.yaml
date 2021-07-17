@@ -17,3 +17,11 @@ spec:
           backend:
             serviceName: bookings-srv
             servicePort: 3002 
+        - path: /v1/ads/?(.*)
+          backend:
+            serviceName: ads-srv
+            servicePort: 3003
+        - path: /v1/categories/?(.*)
+          backend:
+            serviceName: categories-srv
+            servicePort: 3001     
