@@ -1,8 +1,4 @@
-const nodemailer = require('nodemailer');
-
 const mailchimp = require('@mailchimp/mailchimp_transactional')('oPIBOuBWlJrboohVeIt5fg');
-
-const ejs = require('ejs');
 
 module.exports = class Email {
 	constructor(user, resetToken) {
