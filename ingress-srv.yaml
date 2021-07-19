@@ -13,6 +13,10 @@ spec:
           backend:
             serviceName: users-srv
             servicePort: 3004
+        - path: /v1/bookings/?(.*)
+          backend:
+            serviceName: bookings-srv
+            servicePort: 3002 
         - path: /v1/ads/?(.*)
           backend:
             serviceName: ads-srv
