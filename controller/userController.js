@@ -1,6 +1,6 @@
 const Users = require('../model/userModel');
-const { appErrors, appSuccess } = require('../constants/appConstants');
-const { a } = require('tdb_globalutils');
+const { appErrors, appSuccess} = require('../constants/appConstants');
+const { SUCCESS } = require('../constants/appConstants').resStatus;
 const { catchAsync, AppError } = require('tdb_globalutils');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
