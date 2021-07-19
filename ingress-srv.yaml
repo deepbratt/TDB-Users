@@ -24,4 +24,8 @@ spec:
         - path: /v1/categories/?(.*)
           backend:
             serviceName: categories-srv
-            servicePort: 3001     
+            servicePort: 3001  
+        - path: /v1/tezDeals-doc/?(.*)
+          backend:
+            serviceName: swagger-doc-srv
+            servicePort: 5000         
