@@ -7,7 +7,7 @@ const axios = require('axios');
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
 
-const PORT = process.env.PORT || 5003; // port
+const PORT = 3004;// port
 const app = express();
 
 // CORS
@@ -29,7 +29,7 @@ app.get('/v1/users/abx', (req, res) => {
 });
 
 app.listen(PORT, async () => {
-	console.log(`listening`);
-	const res = await axios.get('http://bookings-srv:3002/bookings');
+	console.log(`Listening on Port ${PORT}`);
+	const res = await axios.get('http://bookings-srv:3002/v1/bookings');
 	console.log(res);
 });
