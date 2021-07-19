@@ -24,10 +24,12 @@ module.exports = class Email {
 				subject: 'Password Reset Token Valid for 30 minutes',
 				from_email: 'info@themagnit.com',
 				from_name: 'TezDeal',
-				to: {
-					email: this.to,
-					name: this.firstName,
-				},
+				to: [
+					{
+						email: this.to,
+						name: this.firstName,
+					},
+				],
 			},
 		});
 		return response;
