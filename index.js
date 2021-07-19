@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const axios = require('axios');
 const passport = require('passport');
-const AppError = require('tdb_globalutils/errorHandling/AppError');
+const {AppError} = require('tdb_globalutils');
 //const {c}= require('tdb_globalutils')
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
@@ -12,7 +12,7 @@ require('./passportStrategies/facebookStrategy');
 require('./passportStrategies/googleStrategy');
 
 // Global Error Handler
-const globalErrorHandler = require('tdb_globalutils/errorHandling/errorHandler');
+const {errorHandler} = require('tdb_globalutils');
 
 const userRoute = require('./constants/appConstants').routeConsts.userRoute;
 const userRouter = require('./routes/userRoutes');
@@ -32,22 +32,11 @@ app.use(cookieParser()); // cookie parser (reading data from cookie to req.cooki
 
 app.use(userRoute, userRouter);
 
-app.get('/v1/users', (req, res) => {
-  res.status(200).json({
-    title: 'users',
-  });
-});
-app.get('/v1/users/abx', (req, res) => {
-  res.status(200).json({
-    title: 'user abc',
-  });
-});
-
 app.all('*', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 
-app.use(globalErrorHandler);
+app.use(errorHandler);
 
 app.listen(PORT, async () => {
 	console.log(`Listening on Port ${PORT}`);

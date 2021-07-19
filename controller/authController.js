@@ -65,7 +65,6 @@ exports.login = catchAsync(async (req, res, next) => {
     // checking email or password empty?
     return next(new AppError(appErrors.NO_CREDENTIALS, 400));
   }
-
   const user = await User.findOne({ email: email }).select('+password');
   //user existance and password is correct
   if (!user || !(await user.correctPassword(password, user.password))) {
