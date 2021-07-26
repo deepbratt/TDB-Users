@@ -5,7 +5,7 @@ const { appErrors, appSuccess } = require('../constants/appConstants');
 const { SUCCESS } = require('tdb_globalutils/constants/appConstants').resStatus;
 const jwt = require('jsonwebtoken');
 const jwtManagement = require('../utils/jwtManagement');
-const sendEmail = require('../utils/email');
+const Email = require('../utils/email');
 const sendSMS = require('../utils/resetThroughNum');
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -65,7 +65,6 @@ exports.login = catchAsync(async (req, res, next) => {
     // checking email or password empty?
     return next(new AppError(appErrors.NO_CREDENTIALS, 400));
   }
-
   const user = await User.findOne({ email: email }).select('+password');
   //user existance and password is correct
   if (!user || !(await user.correctPassword(password, user.password))) {
@@ -124,15 +123,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  const message = `Your Password Reset Code is : ${resetToken}`;
-
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token(valid for 10 minutes)',
-      message,
-    });
-
+    const res = await new Email(user,resetToken).forgotPassword()
+    if(res.status==='rejected'){
+      throw new Error('There was error sending email. Please try again later')
+    }
     res.status(200).json({
       status: SUCCESS,
       message: 'Token sent to Email',
