@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: app/v1
 kind: Deployment
 metadata:
   name: users-depl
@@ -18,6 +18,8 @@ spec:
         - name: users
           image: magnit002/tezdeals-users:1.0.14
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: dockersecret
 ---
 apiVersion: v1
 kind: Service
