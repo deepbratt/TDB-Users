@@ -17,7 +17,7 @@ passport.use(
 		{
 			clientID: process.env.FACEBOOK_CLIENT_ID,
 			clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-			callbackURL: 'http://localhost:3004/v1/users/auth/facebook/callback',
+			callbackURL: process.env.FACEBOOK_OAUTH_LINK,
 			profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)', 'email'],
 		},
 		async (accessToken, refreshToken, profile, done) => {
@@ -34,7 +34,6 @@ passport.use(
 			try {
 				//find the user in our database
 				let user = await User.findOne({ facebookId: profile.id });
-
 				if (user) {
 					//If user present in our database.
 					done(null, user);
