@@ -15,13 +15,17 @@ passport.deserializeUser((req, id, done) => {
   });
 });
 
+// function URL(req) {
+//   return `${req.protocol}://${req.get('host')}/v1/users/auth/google/callback`;
+// }
+
 //) 1st Step
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3004/v1/users/auth/google/callback',
+      callbackURL: process.env.GOOGLE_OAUTH_LINK,
     },
     async (accessToken, refreshToken, profile, done) => {
       const newUser = {

@@ -39,7 +39,13 @@ app.all('*', (req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, async () => {
+<<<<<<< HEAD
+  console.log(`listening`);
+  // const res = await axios.get('http://bookings-srv:3002/bookings');
+  // console.log(res);
+=======
 	console.log(`Listening on Port ${PORT}`);
 	const res = await axios.get('http://bookings-srv:3002/v1/bookings');
 	console.log(res);
+>>>>>>> e81991f2fefe56ec6026925dc0bbb4de6407476d
 });

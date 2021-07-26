@@ -41,7 +41,23 @@ exports.getUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
+<<<<<<< HEAD
+  const result = await Users.findByIdAndUpdate(req.params.id, req.body, {
+    runValidators: true,
+    new: true,
+  });
+
+  if (!result) return next(new AppError(appErrors.NOT_FOUND), 404);
+
+  res.status(200).json({
+    status: SUCCESS,
+    data: {
+      result,
+    },
+  });
+=======
 	res.send('This route is defined Yet!!!');
+>>>>>>> e81991f2fefe56ec6026925dc0bbb4de6407476d
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
