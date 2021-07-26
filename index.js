@@ -2,7 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const axios = require('axios');
 const passport = require('passport');
 const { AppError } = require('tdb_globalutils');
 //const {c}= require('tdb_globalutils')
@@ -38,6 +37,6 @@ app.all('*', (req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
   console.log(`Listening on Port ${PORT}`);
 });

@@ -1,4 +1,4 @@
-const mailchimp = require('@mailchimp/mailchimp_transactional')('oPIBOuBWlJrboohVeIt5fg');
+const mailchimp = require('@mailchimp/mailchimp_transactional')('wBBQ_gkehEEbjxn5E-LGWg');
 
 module.exports = class Email {
 	constructor(user, resetToken) {
@@ -9,7 +9,7 @@ module.exports = class Email {
 	}
 	async forgotPassword() {
 		const response = await mailchimp.messages.sendTemplate({
-			template_name: 'tezdealsforgotpassword',
+			template_name: 'passwordresettoken',
 			template_content: [
 				{
 					name: 'fname',
