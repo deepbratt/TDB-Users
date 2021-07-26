@@ -32,17 +32,6 @@ app.use(cookieParser()); // cookie parser (reading data from cookie to req.cooki
 
 app.use(userRoute, userRouter);
 
-app.get('/v1/users', (req, res) => {
-  res.status(200).json({
-    title: 'users',
-  });
-});
-app.get('/v1/users/abx', (req, res) => {
-  res.status(200).json({
-    title: 'user abc',
-  });
-});
-
 app.all('*', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
@@ -51,6 +40,6 @@ app.use(globalErrorHandler);
 
 app.listen(PORT, async () => {
   console.log(`listening`);
-  const res = await axios.get('http://bookings-srv:3002/bookings');
-  console.log(res);
+  // const res = await axios.get('http://bookings-srv:3002/bookings');
+  // console.log(res);
 });
