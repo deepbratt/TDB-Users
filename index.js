@@ -40,6 +40,6 @@ app.use(errorHandler);
 
 app.listen(PORT, async () => {
 	console.log(`Listening on Port ${PORT}`);
-	const res = await axios.get('http://bookings-srv:3002/v1/bookings');
-	console.log(res);
+	// const res = await axios.get('http://bookings-srv:3002/v1/bookings');
+	// console.log(res);
 });
