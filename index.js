@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
@@ -9,9 +10,10 @@ dotenv.config({ path: './config/config.env' }); // read config.env to environmen
 require('./config/dbConnection')(); // db connection
 require('./passportStrategies/facebookStrategy');
 require('./passportStrategies/googleStrategy');
+const session = require('cookie-session');
 
 // Global Error Handler
-const { errorHandler } = require('tdb_globalutils');
+const globalErrorHandler = require('tdb_globalutils/errorHandling/errorHandler');
 
 const userRoute = require('./constants/appConstants').routeConsts.userRoute;
 const userRouter = require('./routes/userRoutes');
@@ -22,8 +24,22 @@ const app = express();
 // CORS
 app.use(cors());
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+  }),
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(
+  morgan('dev', {
+    skip: function (req, res) {
+      return res.statusCode < 200;
+    },
+  }),
+);
 
 // GLOBAL MIDDLEWARES
 app.use(express.json()); // body parser (reading data from body to req.body)
@@ -35,7 +51,7 @@ app.all('*', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 
-app.use(errorHandler);
+app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening on Port ${PORT}`);
