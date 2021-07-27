@@ -10,7 +10,6 @@
 	"author": "Magnit",
 	"license": "ISC",
 	"dependencies": {
-		"@constants/tdb-constants": "^1.0.0",
 		"@mailchimp/mailchimp_transactional": "^1.0.31",
 		"axios": "^0.21.1",
 		"bcryptjs": "^2.4.3",
