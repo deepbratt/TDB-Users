@@ -20,10 +20,10 @@ router.get(
 	passport.authenticate('google', {
 		successRedirect: 'https://themagnit.com/',
 		failureRedirect: '/auth/error',
-	})
-	// function (req, res) {
-	//   res.redirect('/v1/users');
-	// },
+	}),
+	function (req, res) {
+		console.log(req);
+	}
 );
 
 // Facebook Authentication callback Route
