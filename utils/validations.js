@@ -10,7 +10,7 @@ exports.validationFunction = async (req, res, next) => {
   next();
 };
 
-exports.signupValidationRules = [
+exports.signupEmailRules = [
   check('firstName', appErrors.FIRSTNAME_REQUIRED)
     .not()
     .isEmpty()
@@ -22,7 +22,6 @@ exports.signupValidationRules = [
     .isAlpha()
     .withMessage(appErrors.INVALID_LASTNAME),
   check('email', appErrors.INVALID_EMAIL).not().isEmpty().isEmail(),
-  check('phone', appErrors.INVALID_PHONE_NUM).not().isEmpty().isMobilePhone(),
   check('password', appErrors.PASSWORD_LENGTH)
     .isLength({ min: 8 })
     .custom((value, { req }) => {
@@ -33,4 +32,26 @@ exports.signupValidationRules = [
         return value;
       }
     }),
+];
+exports.signupPhoneRules = [
+	check('firstName', appErrors.FIRSTNAME_REQUIRED)
+		.not()
+		.isEmpty()
+		.isAlpha()
+		.withMessage(appErrors.INVALID_FIRSTNAME),
+	check('lastName', appErrors.LASTNAME_REQUIRED)
+		.not()
+		.isEmpty()
+		.isAlpha()
+		.withMessage(appErrors.INVALID_LASTNAME),
+	check('password', appErrors.PASSWORD_LENGTH)
+		.isLength({ min: 8 })
+		.custom((value, { req }) => {
+			if (value !== req.body.passwordConfirm) {
+				// trow error if passwords do not match
+				throw new Error(appErrors.PASSWORD_MISMATCH);
+			} else {
+				return value;
+			}
+		}),
 ];

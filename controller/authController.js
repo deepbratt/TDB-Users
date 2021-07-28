@@ -7,7 +7,7 @@ const { SUCCESS } = require('tdb_globalutils/constants/appConstants').resStatus;
 const jwt = require('jsonwebtoken');
 const jwtManagement = require('../utils/jwtManagement');
 const Email = require('../utils/email');
-const sendSMS = require('../utils/resetThroughNum');
+const sendSMS = require('../utils/sendSMS');
 
 exports.signupWithEmail = catchAsync(async (req, res, next) => {
 	const newUser = {

@@ -10,7 +10,7 @@ dotenv.config({ path: './config/config.env' }); // read config.env to environmen
 require('./config/dbConnection')(); // db connection
 require('./passportStrategies/facebookStrategy');
 require('./passportStrategies/googleStrategy');
-const session = require('cookie-session');
+//const session = require('cookie-session');
 
 // Global Error Handler
 const globalErrorHandler = require('tdb_globalutils/errorHandling/errorHandler');
@@ -24,14 +24,14 @@ const app = express();
 // CORS
 app.use(cors());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-  }),
-);
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//   }),
+// );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(
   morgan('dev', {
