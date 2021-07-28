@@ -71,16 +71,25 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.authenticate = catchAsync(async (req, res, next) => {
+	//passportauthentication
+	if (req.session.passport.user.id) {
+		const user = await User.findById(req.session.passport.user.id);
+		if (user) {
+			req.user = user;
+			return next();
+		}
+	}
 	//getting token and check is it there
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 		token = req.headers.authorization.split(' ')[1];
-	} else if (req.cookies.jwt) {
-		token = req.cookies.jwt;
+	} else if (req.session && req.session.jwt) {
+		token = req.session.jwt;
 	}
 	if (!token) {
 		return next(new AppError(appErrors.UNAUTHORIZED_ERROR, 401));
 	}
+
 	//verification token
 	const decoded = jwt.verify(token, JWT_SECRET);
 	//check if user sitll exists

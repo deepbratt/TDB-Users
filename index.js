@@ -24,14 +24,7 @@ const app = express();
 // CORS
 app.use(cors());
 
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-	})
-);
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(
 	morgan('dev', {
@@ -44,6 +37,15 @@ app.use(
 // GLOBAL MIDDLEWARES
 app.use(express.json()); // body parser (reading data from body to req.body)
 app.use(cookieParser()); // cookie parser (reading data from cookie to req.cookie)
+
+app.use(
+	session({
+		signed: false,
+	})
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(userRoute, userRouter);
 
