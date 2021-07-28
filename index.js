@@ -10,7 +10,7 @@ dotenv.config({ path: './config/config.env' }); // read config.env to environmen
 require('./config/dbConnection')(); // db connection
 require('./passportStrategies/facebookStrategy');
 require('./passportStrategies/googleStrategy');
-//const session = require('cookie-session');
+const session = require('cookie-session');
 
 // Global Error Handler
 const globalErrorHandler = require('tdb_globalutils/errorHandling/errorHandler');
