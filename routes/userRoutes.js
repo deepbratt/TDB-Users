@@ -70,7 +70,7 @@ router
 	.get(userController.getUser)
 	.patch(userController.updateUser)
 	.delete(userController.deleteUser);
-router.route('/protected').get(authController.authenticate, (req, res) => {
+router.route('/protected').post(authController.authenticate, (req, res) => {
 	res.json({
 		user: req.user,
 	});
