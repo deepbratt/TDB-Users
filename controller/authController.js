@@ -72,15 +72,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.authenticate = catchAsync(async (req, res, next) => {
 	//passportauthentication
-	if (req.session.passport.user) {
-		req.user = req.session.passport.user;
+	if (req.user) {
 		return next();
-		// console.log(req.session.passport.user);
-		// const user = await User.findById(req.session.passport.user[id]);
-		// if (user) {
-		// 	req.user = user;
-		// 	return next();
-		// }
 	}
 	//getting token and check is it there
 	let token;
