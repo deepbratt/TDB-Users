@@ -9,11 +9,11 @@ passport.serializeUser((user, done) => {
 
 //) 3rd Step
 // id coming from serializeUser ==> user.id
-passport.deserializeUser((req, id, done) => {
-  User.findById(req.id).then((user) => {
-    done(null, user);
-  });
-});
+// passport.deserializeUser((req, id, done) => {
+//   User.findById(req.id).then((user) => {
+//     done(null, user);
+//   });
+// });
 
 // function URL(req) {
 //   return `${req.protocol}://${req.get('host')}/v1/users/auth/google/callback`;
