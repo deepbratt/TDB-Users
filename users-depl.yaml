@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: magnit002/tezdeals-users:1.0.17
+          image: magnit002/tezdeals-users:1.0.18
           imagePullPolicy: Always
       imagePullSecrets:
         - name: dockersecret
