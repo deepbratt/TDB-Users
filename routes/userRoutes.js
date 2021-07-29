@@ -2,10 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const authController = require('../controller/authController');
 const userController = require('../controller/userController');
-const {
-  signupValidationRules,
-  validationFunction,
-} = require('../utils/validations');
+const { signupEmailRules, signupPhoneRules, validationFunction } = require('../utils/validations');
 
 const router = express.Router();
 
@@ -19,14 +16,14 @@ router.get(
 
 // Google Authentication callback Route
 router.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: 'https://themagnit.com/',
-    failureRedirect: '/auth/error',
-  }),
-  // function (req, res) {
-  //   res.redirect('/v1/users');
-  // },
+	'/auth/google/callback',
+	passport.authenticate('google', {
+		successRedirect: 'https://themagnit.com/',
+		failureRedirect: '/auth/error',
+	}),
+	function (req, res) {
+		console.log(req);
+	}
 );
 
 // Facebook Authentication callback Route
@@ -45,7 +42,7 @@ router.get(
 );
 
 router.post('/signup-email', authController.signupWithEmail);
-router.post('/signup-phone', authController.signupWithNumber);
+router.post('/signup-phone', signupPhoneRules, validationFunction, authController.signupWithNumber);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
@@ -84,9 +81,13 @@ router
   .post(userController.createUser);
 
 router
-  .route('/:id')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
-
+	.route('/:id')
+	.get(userController.getUser)
+	.patch(userController.updateUser)
+	.delete(userController.deleteUser);
+router.route('/protected').post(authController.authenticate, (req, res) => {
+	res.json({
+		user: req.user,
+	});
+});
 module.exports = router;

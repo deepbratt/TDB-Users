@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
 });
 
 //) 3rd Step
-// id coming from serializeUser ==> user.id
+//id coming from serializeUser ==> user.id
 passport.deserializeUser((req, id, done) => {
   User.findById(req.id).then((user) => {
     done(null, user);

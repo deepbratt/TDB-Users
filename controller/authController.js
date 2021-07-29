@@ -11,7 +11,7 @@ const {
 const jwt = require('jsonwebtoken');
 const jwtManagement = require('../utils/jwtManagement');
 const Email = require('../utils/email');
-const sendSMS = require('../utils/resetThroughNum');
+const sendSMS = require('../utils/sendSMS');
 
 exports.signupWithEmail = catchAsync(async (req, res, next) => {
   const newUser = {
@@ -84,6 +84,10 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.authenticate = catchAsync(async (req, res, next) => {
+  //passportauthentication
+  if (req.user) {
+    return next();
+  }
   //getting token and check is it there
   let token;
   if (

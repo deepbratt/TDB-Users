@@ -24,35 +24,37 @@ const app = express();
 // CORS
 app.use(cors());
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-  }),
-);
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(
-  morgan('dev', {
-    skip: function (req, res) {
-      return res.statusCode < 200;
-    },
-  }),
+	morgan('dev', {
+		skip: function (req, res) {
+			return res.statusCode < 200;
+		},
+	})
 );
 
 // GLOBAL MIDDLEWARES
 app.use(express.json()); // body parser (reading data from body to req.body)
 app.use(cookieParser()); // cookie parser (reading data from cookie to req.cookie)
 
+app.use(
+	session({
+		signed: false,
+	})
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(userRoute, userRouter);
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
+	next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Listening on Port ${PORT}`);
+	console.log(`Listening on Port ${PORT}`);
 });
