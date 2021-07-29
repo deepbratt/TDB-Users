@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const passport = require('passport');
-const { AppError } = require('tdb_globalutils');
+const { AppError } = require('@utils/tdb_globalutils');
 //const {c}= require('tdb_globalutils')
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
@@ -13,7 +13,7 @@ require('./passportStrategies/googleStrategy');
 const session = require('cookie-session');
 
 // Global Error Handler
-const globalErrorHandler = require('tdb_globalutils/errorHandling/errorHandler');
+const { errorHandler } = require('@utils/tdb_globalutils');
 
 const userRoute = require('./constants/appConstants').routeConsts.userRoute;
 const userRouter = require('./routes/userRoutes');
@@ -51,7 +51,7 @@ app.all('*', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 
-app.use(globalErrorHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Listening on Port ${PORT}`);

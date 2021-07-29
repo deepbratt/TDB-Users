@@ -10,7 +10,9 @@
 	"author": "Magnit",
 	"license": "ISC",
 	"dependencies": {
+		"@constants/tdb-constants": "^1.0.3",
 		"@mailchimp/mailchimp_transactional": "^1.0.31",
+		"@utils/tdb_globalutils": "^1.0.9",
 		"axios": "^0.21.1",
 		"bcrypt": "^5.0.1",
 		"bcryptjs": "^2.4.3",
@@ -28,7 +30,6 @@
 		"passport": "^0.4.1",
 		"passport-facebook": "^3.0.0",
 		"passport-google-oauth20": "^2.0.0",
-		"tdb_globalutils": "^1.0.5",
 		"twilio": "^3.66.0"
 	},
 	"devDependencies": {
