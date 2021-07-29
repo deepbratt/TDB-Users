@@ -1,18 +1,23 @@
 const Users = require('../model/userModel');
-const { appErrors, appSuccess } = require('../constants/appConstants');
-const { SUCCESS } = require('../constants/appConstants').resStatus;
-const { catchAsync, AppError } = require('tdb_globalutils');
+const AppError = require('@utils/tdb_globalutils/errorHandling/AppError');
+const catchAsync = require('@utils/tdb_globalutils/errorHandling/catchAsync');
+const {
+  ERRORS,
+  STATUS_CODE,
+  SUCCESS_MSG,
+  STATUS,
+} = require('@constants/tdb-constants');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const result = await Users.find();
 
   if (!result) {
-    return next(new AppError(appErrors.NOT_FOUND), 404);
+    return next(new AppError(ERRORS.INVALID.NOT_FOUND), STATUS_CODE.NOT_FOUND);
   }
 
-  res.status(200).json({
-    status: SUCCESS,
-    message: appSuccess.OPERATION_SUCCESSFULL,
+  res.status(STATUS_CODE.OK).json({
+    status: STATUS.SUCCESS,
+    message: SUCCESS_MSG.SUCCESS_MESSAGES.OPERATION_SUCCESSFULL,
     total: result.length,
     data: {
       result,
@@ -21,19 +26,19 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
-  res.send('This route is not defined yet!!!');
+  res.send(ERRORS.INVALID.NOT_FOUND);
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
   const result = await Users.findById(req.params.id);
 
   if (!result) {
-    return next(new AppError(appErrors.NOT_FOUND), 404);
+    return next(new AppError(ERRORS.INVALID.NOT_FOUND), STATUS_CODE.NOT_FOUND);
   }
 
-  res.status(200).json({
-    status: SUCCESS,
-    message: appSuccess.OPERATION_SUCCESSFULL,
+  res.status(STATUS_CODE.OK).json({
+    status: STATUS.SUCCESS,
+    message: SUCCESS_MSG.SUCCESS_MESSAGES.OPERATION_SUCCESSFULL,
     data: {
       result,
     },
@@ -46,10 +51,12 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     new: true,
   });
 
-  if (!result) return next(new AppError(appErrors.NOT_FOUND), 404);
+  if (!result)
+    return next(new AppError(ERRORS.INVALID.NOT_FOUND), STATUS_CODE.NOT_FOUND);
 
-  res.status(200).json({
-    status: SUCCESS,
+  res.status(STATUS_CODE.OK).json({
+    status: STATUS.SUCCESS,
+    message: SUCCESS_MSG.SUCCESS_MESSAGES.OPERATION_SUCCESSFULL,
     data: {
       result,
     },
@@ -60,12 +67,12 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   const result = await Users.findByIdAndDelete(req.params.id);
 
   if (!result) {
-    return next(new AppError(appErrors.NOT_FOUND), 404);
+    return next(new AppError(ERRORS.INVALID.NOT_FOUND), STATUS_CODE.NOT_FOUND);
   }
 
-  res.status(200).json({
-    status: SUCCESS,
-    message: appSuccess.OPERATION_SUCCESSFULL,
+  res.status(STATUS_CODE.OK).json({
+    status: STATUS.SUCCESS,
+    message: SUCCESS_MSG.SUCCESS_MESSAGES.OPERATION_SUCCESSFULL,
     data: null,
   });
 });

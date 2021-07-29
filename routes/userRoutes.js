@@ -8,10 +8,10 @@ const router = express.Router();
 
 // Google Authentication Route
 router.get(
-	'/auth/google',
-	passport.authenticate('google', {
-		scope: ['profile', 'email'],
-	})
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }),
 );
 
 // Google Authentication callback Route
@@ -28,17 +28,17 @@ router.get(
 
 // Facebook Authentication callback Route
 router.get(
-	'/auth/facebook',
-	passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+  '/auth/facebook',
+  passport.authenticate('facebook', { scope: ['public_profile', 'email'] }),
 );
 
 // Facebook Authentication callback Route
 router.get(
-	'/auth/facebook/callback',
-	passport.authenticate('facebook', {
-		successRedirect: 'https://themagnit.com/',
-		failureRedirect: '/auth/error',
-	})
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: 'https://themagnit.com/',
+    failureRedirect: '/auth/error',
+  }),
 );
 
 router.post('/signup-email', authController.signupWithEmail);
@@ -49,21 +49,36 @@ router.get('/logout', authController.logout);
 // forgot Password with Email
 router.post('/forgotPassword-with-email', authController.forgotPassword);
 // Forgot Password Via Number
-router.post('/forgetPassword-with-phone', authController.forgotPasswordWithNumber);
+router.post(
+  '/forgetPassword-with-phone',
+  authController.forgotPasswordWithNumber,
+);
 
 //Reset Password
 router.patch('/resetPassword/:token', authController.resetPassword);
 
 //Send verification email
-router.post('/send-verification-email', authController.sendVerificationCodetoEmail);
+router.post(
+  '/send-verification-email',
+  authController.sendVerificationCodetoEmail,
+);
 
 //Send verification Phone
-router.post('/send-verification-phone', authController.sendVerificationCodetoPhone);
+router.post(
+  '/send-verification-phone',
+  authController.sendVerificationCodetoPhone,
+);
 
 //account verification
-router.patch('/account-verification/:token', authController.accountVerification);
+router.patch(
+  '/account-verification/:token',
+  authController.accountVerification,
+);
 
-router.route('/').get(userController.getAllUsers).post(userController.createUser);
+router
+  .route('/')
+  .get(userController.getAllUsers)
+  .post(userController.createUser);
 
 router
 	.route('/:id')
