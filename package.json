@@ -1,6 +1,6 @@
 {
 	"name": "users",
-	"version": "1.0.31",
+	"version": "1.0.32",
 	"description": "users service",
 	"main": "index.js",
 	"scripts": {
@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@constants/tdb-constants": "^1.0.3",
 		"@mailchimp/mailchimp_transactional": "^1.0.31",
-		"@utils/tdb_globalutils": "^1.0.9",
+		"@utils/tdb_globalutils": "^1.0.10",
 		"axios": "^0.21.1",
 		"bcryptjs": "^2.4.3",
 		"cookie-parser": "^1.4.5",
