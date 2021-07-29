@@ -41,7 +41,7 @@ router.get(
   }),
 );
 
-router.post('/signup-email', authController.signupWithEmail);
+router.post('/signup-email', signupEmailRules, validationFunction, authController.signupWithEmail);
 router.post('/signup-phone', signupPhoneRules, validationFunction, authController.signupWithNumber);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);

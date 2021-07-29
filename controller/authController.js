@@ -73,10 +73,10 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.authenticate = catchAsync(async (req, res, next) => {
-	//passportauthentication
-	if (req.user) {
-		return next();
-	}
+	// //passportauthentication
+	// if (req.user) {
+	// 	return next();
+	// }
 	//getting token and check is it there
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -85,7 +85,7 @@ exports.authenticate = catchAsync(async (req, res, next) => {
 		token = req.cookies.jwt;
 	}
 	if (!token) {
-		return next(new AppError(ERRORS.REQUIRED.NO_CREDENTIALS, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAVAILABLE));
 	}
 	//verification token
 	const decoded = jwt.verify(token, JWT_SECRET);
