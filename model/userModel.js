@@ -125,7 +125,7 @@ userSchema.methods.createPasswordResetToken = async function () {
     resetToken = Math.floor(Math.random() * (1000 - 9999 + 1) + 9999);
   } while (
     await User.findOne({
-      passwordResetToken: await crypto
+      passwordResetToken: crypto
         .createHash('sha256')
         .update(resetToken)
         .digest('hex'),
