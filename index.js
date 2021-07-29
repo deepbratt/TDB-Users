@@ -15,7 +15,7 @@ const session = require('cookie-session');
 // Global Error Handler
 const { errorHandler } = require('@utils/tdb_globalutils');
 
-const userRoute = require('./constants/appConstants').routeConsts.userRoute;
+const userRoute = require('./constants/routeConts').routeConsts.userRoute;
 const userRouter = require('./routes/userRoutes');
 
 const PORT = 3004; // port
