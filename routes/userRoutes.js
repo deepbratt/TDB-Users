@@ -36,7 +36,7 @@ router
 	.get(userController.getUser)
 	.patch(userController.updateUser)
 	.delete(userController.deleteUser);
-router.route('/isLoggedin').get(authController.isLoggedIn);
+router.route('/isLoggedin').post(authController.isLoggedIn);
 router.route('/protected').post(authenticate, (req, res) => {
 	res.json({
 		user: req.user,
