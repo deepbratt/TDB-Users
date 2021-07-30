@@ -4,6 +4,7 @@ const AppError = require('@utils/tdb_globalutils/errorHandling/AppError');
 const catchAsync = require('@utils/tdb_globalutils/errorHandling/catchAsync');
 const { ERRORS, STATUS_CODE, SUCCESS_MSG, STATUS } = require('@constants/tdb-constants');
 const jwtManagement = require('../../utils/jwtManagement');
+const jwt = require('jsonwebtoken');
 const Email = require('../../utils/email');
 const sendSMS = require('../../utils/sendSMS');
 
