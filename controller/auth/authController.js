@@ -55,7 +55,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAVAILABLE));
 	}
 	//verification token
-	const decoded = jwt.verify(token, JWT_SECRET);
+	const decoded = jwt.verify(token, process.env.JWT_SECRET);
 	//check if user sitll exists
 	const currentUser = await User.findById(decoded.userdata.id);
 	if (!currentUser) {
