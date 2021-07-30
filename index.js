@@ -31,7 +31,7 @@ app.use(
 
 // GLOBAL MIDDLEWARES
 app.use(express.json()); // body parser (reading data from body to req.body)
-app.use(cookieParser()); // cookie parser (reading data from cookie to req.cookie)
+//app.use(cookieParser()); // cookie parser (reading data from cookie to req.cookie)
 
 app.use(
 	session({
