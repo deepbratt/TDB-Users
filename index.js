@@ -3,13 +3,10 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const passport = require('passport');
 const { AppError } = require('@utils/tdb_globalutils');
 //const {c}= require('tdb_globalutils')
 dotenv.config({ path: './config/config.env' }); // read config.env to environmental variables
 require('./config/dbConnection')(); // db connection
-require('./passportStrategies/facebookStrategy');
-require('./passportStrategies/googleStrategy');
 const session = require('cookie-session');
 
 // Global Error Handler
@@ -23,8 +20,6 @@ const app = express();
 
 // CORS
 app.use(cors());
-
-
 
 app.use(
 	morgan('dev', {
@@ -43,9 +38,6 @@ app.use(
 		signed: false,
 	})
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(userRoute, userRouter);
 
