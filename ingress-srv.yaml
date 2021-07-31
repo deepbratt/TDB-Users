@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata: 
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - http:
+        paths:
+        - path: /v1/users/?(.*)
+          backend:
+            serviceName: users-srv
+            servicePort: 3004
+        - path: /v1/bookings/?(.*)
+          backend:
+            serviceName: bookings-srv
+            servicePort: 3002 
+        - path: /v1/ads/?(.*)
+          backend:
+            serviceName: ads-srv
+            servicePort: 3003
+        - path: /v1/categories/?(.*)
+          backend:
+            serviceName: categories-srv
+            servicePort: 3001  
+        - path: /v1/tezDeals-doc/?(.*)
+          backend:
+            serviceName: swagger-doc-srv
+            servicePort: 3005         
