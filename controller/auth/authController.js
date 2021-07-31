@@ -7,6 +7,10 @@ const jwtManagement = require('../../utils/jwtManagement');
 const jwt = require('jsonwebtoken');
 const Email = require('../../utils/email');
 const sendSMS = require('../../utils/sendSMS');
+const {
+	sendVerificationCodetoEmail,
+	sendVerificationCodetoPhone,
+} = require('./accountVerification');
 
 exports.continueGoogle = catchAsync(async (req, res, next) => {
 	let user;
@@ -53,7 +57,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 		token = req.session.jwt;
 	}
 	if (!token) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAUTHORIZED));
 	}
 	//verification token
 	const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -64,7 +68,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 	}
 	//check if user changed password after the token was issued
 	if (currentUser.changedPasswordAfter(decoded.iat)) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.INVALID_JWT, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.UNAUTHORIZED.INVALID_JWT, STATUS_CODE.UNAUTHORIZED));
 	}
 	//send loggedIn User
 	res.status(STATUS_CODE.OK).json({
@@ -106,15 +110,15 @@ exports.loginEmail = catchAsync(async (req, res, next) => {
 	}
 	const user = await User.findOne({ email: email }).select('+password');
 	if (user.googleId || user.facebookId) {
-		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
 	//user existance and password is correct
 	if (!user || !(await user.correctPassword(password, user.password))) {
-		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
 	// check acccount verification
 	if (!user.isVerified) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_VERIFIED, STATUS_CODE.UNAVAILABLE));
+		return await sendVerificationCodetoEmail(req, res, next);
 	}
 	jwtManagement.createSendJwtToken(user, STATUS_CODE.OK, req, res);
 });
@@ -128,15 +132,15 @@ exports.loginPhone = catchAsync(async (req, res, next) => {
 	}
 	const user = await User.findOne({ phone: phone }).select('+password');
 	if (user.googleId || user.facebookId) {
-		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
 	//user existance and password is correct
 	if (!user || !(await user.correctPassword(password, user.password))) {
-		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
 	// check acccount verification
 	if (!user.isVerified) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_VERIFIED, STATUS_CODE.UNAVAILABLE));
+		return await sendVerificationCodetoPhone(req, res, next);
 	}
 	jwtManagement.createSendJwtToken(user, STATUS_CODE.OK, req, res);
 });

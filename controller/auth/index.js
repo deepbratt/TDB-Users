@@ -5,8 +5,7 @@ const {
 } = require('./accountVerification');
 const {
 	resetPassword,
-	forgotPasswordEmail,
-	forgotPasswordNumber,
+	forgotPassword,
 } = require('./passwordController');
 const {
 	signupEmail,
@@ -24,8 +23,7 @@ module.exports = {
 	sendVerificationCodetoEmail,
 	sendVerificationCodetoPhone,
 	resetPassword,
-	forgotPasswordEmail,
-	forgotPasswordNumber,
+	forgotPassword,
 	signupEmail,
 	signupPhone,
 	loginEmail,

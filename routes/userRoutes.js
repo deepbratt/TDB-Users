@@ -17,10 +17,8 @@ router.post('/login-email', authController.loginEmail);
 router.post('/login-phone', authController.loginPhone);
 router.get('/logout', authController.logout);
 
-// forgot Password with Email
-router.post('/forgotPassword-with-email', authController.forgotPasswordEmail);
-// Forgot Password Via Number
-router.post('/forgetPassword-with-phone', authController.forgotPasswordNumber);
+// forgot Password with Email/Phone
+router.post('/forgotPassword', authController.forgotPassword);
 //Reset Password
 router.patch('/resetPassword/:token', authController.resetPassword);
 //Send verification email
