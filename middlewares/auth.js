@@ -11,7 +11,7 @@ const authenticate = catchAsync(async (req, res, next) => {
 		token = req.session.jwt;
 	}
 	if (!token) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.UNAUTHORIZED.NOT_LOGGED_IN, STATUS_CODE.UNAUTHORIZED));
 	}
 	//verification token
 	const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -22,7 +22,7 @@ const authenticate = catchAsync(async (req, res, next) => {
 	}
 	//check if user changed password after the token was issued
 	if (currentUser.changedPasswordAfter(decoded.iat)) {
-		return next(new AppError(ERRORS.UNAUTHORIZED.INVALID_JWT, STATUS_CODE.UNAVAILABLE));
+		return next(new AppError(ERRORS.UNAUTHORIZED.INVALID_JWT, STATUS_CODE.UNAUTHORIZED));
 	}
 	//Grant access to protected route
 	req.user = currentUser;

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: magnit002/tezdeals-users:1.0.42
+          image: magnit002/tezdeals-users:1.0.44
           imagePullPolicy: Always
       imagePullSecrets:
         - name: dockersecret
@@ -32,5 +32,4 @@ spec:
     - name: users
       protocol: TCP
       port: 3004
-      targetPort: 3004     
-
+      targetPort: 3004

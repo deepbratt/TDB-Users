@@ -6,7 +6,7 @@ const { ERRORS, STATUS_CODE, SUCCESS_MSG, STATUS } = require('@constants/tdb-con
 const Email = require('../../utils/email');
 const sendSMS = require('../../utils/sendSMS');
 
-exports.sendVerificationCodetoPhone = catchAsync(async (req, res, next) => {
+exports.sendVerificationCodetoPhone = async (req, res, next) => {
 	const user = await User.findOne({ phone: req.body.phone });
 	if (!user) {
 		return next(new AppError(ERRORS.INVALID.NOT_FOUND, STATUS_CODE.NOT_FOUND));
@@ -23,7 +23,7 @@ exports.sendVerificationCodetoPhone = catchAsync(async (req, res, next) => {
 		});
 
 		res.status(STATUS_CODE.OK).json({
-			status: STATUS.SUCCESS,
+			status: STATUS.UNVERIFIED,
 			message: SUCCESS_MSG.SUCCESS_MESSAGES.TOKEN_SENT_PHONE,
 		});
 	} catch (err) {
@@ -32,9 +32,9 @@ exports.sendVerificationCodetoPhone = catchAsync(async (req, res, next) => {
 		await user.save({ validateBeforeSave: false });
 		return next(new AppError(ERRORS.RUNTIME.SENDING_MESSAGE), STATUS_CODE.SERVER_ERROR);
 	}
-});
+};
 
-exports.sendVerificationCodetoEmail = catchAsync(async (req, res, next) => {
+exports.sendVerificationCodetoEmail = async (req, res, next) => {
 	const user = await User.findOne({ email: req.body.email });
 
 	if (!user) {
@@ -52,7 +52,7 @@ exports.sendVerificationCodetoEmail = catchAsync(async (req, res, next) => {
 		// });
 
 		res.status(STATUS_CODE.OK).json({
-			status: STATUS.SUCCESS,
+			status: STATUS.UNVERIFIED,
 			message: SUCCESS_MSG.SUCCESS_MESSAGES.TOKEN_SENT_EMAIL,
 		});
 	} catch (err) {
@@ -61,7 +61,7 @@ exports.sendVerificationCodetoEmail = catchAsync(async (req, res, next) => {
 		await user.save({ validateBeforeSave: false });
 		return next(new AppError(ERRORS.RUNTIME.SENDING_MESSAGE), STATUS_CODE.SERVER_ERROR);
 	}
-});
+};
 
 exports.accountVerification = catchAsync(async (req, res, next) => {
 	const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
@@ -73,7 +73,7 @@ exports.accountVerification = catchAsync(async (req, res, next) => {
 	});
 
 	if (!user) {
-		return next(new AppError(ERRORS.INVALID.INVALID_VERIFICATION_TOKEN), STATUS_CODE.UNAVAILABLE);
+		return next(new AppError(ERRORS.INVALID.INVALID_VERIFICATION_TOKEN), STATUS_CODE.UNAUTHORIZED);
 	}
 
 	user.isVerified = true;
