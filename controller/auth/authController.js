@@ -109,6 +109,9 @@ exports.loginEmail = catchAsync(async (req, res, next) => {
 		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS, STATUS_CODE.BAD_REQUEST));
 	}
 	const user = await User.findOne({ email: email }).select('+password');
+	if (!user) {
+		return next(new AppError(ERRORS.INVALID.NOT_FOUND, STATUS_CODE.NOT_FOUND));
+	}
 	if (user.googleId || user.facebookId) {
 		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
@@ -131,6 +134,9 @@ exports.loginPhone = catchAsync(async (req, res, next) => {
 		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS, STATUS_CODE.BAD_REQUEST));
 	}
 	const user = await User.findOne({ phone: phone }).select('+password');
+	if (!user) {
+		return next(new AppError(ERRORS.INVALID.NOT_FOUND, STATUS_CODE.NOT_FOUND));
+	}
 	if (user.googleId || user.facebookId) {
 		return next(new AppError(ERRORS.INVALID.WRONG_CREDENTIAL_ERROR, STATUS_CODE.UNAUTHORIZED));
 	}
