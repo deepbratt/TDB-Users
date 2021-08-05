@@ -28,16 +28,14 @@ router.post('/send-verification-phone', authController.sendVerificationCodetoPho
 //account verification
 router.patch('/account-verification/:token', authController.accountVerification);
 //users
+router.use(authenticate);
 router.route('/').get(userController.getAllUsers).post(userController.createUser);
 router
 	.route('/:id')
 	.get(userController.getUser)
 	.patch(userController.updateUser)
 	.delete(userController.deleteUser);
-router.route('/isLoggedin').post(authController.isLoggedIn);
-router.route('/protected').post(authenticate, (req, res) => {
-	res.json({
-		user: req.user,
-	});
-});
+
+router.route('/currentUser').post(authController.isLoggedIn);
+
 module.exports = router;
