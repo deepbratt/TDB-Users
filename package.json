@@ -1,6 +1,6 @@
 {
 	"name": "users",
-	"version": "1.0.44",
+	"version": "1.0.45",
 	"description": "users service",
 	"main": "index.js",
 	"scripts": {
@@ -10,7 +10,7 @@
 	"author": "Magnit",
 	"license": "ISC",
 	"dependencies": {
-		"@constants/tdb-constants": "^1.0.5",
+		"@constants/tdb-constants": "^1.0.8",
 		"@mailchimp/mailchimp_transactional": "^1.0.31",
 		"@utils/tdb_globalutils": "^1.0.10",
 		"axios": "^0.21.1",

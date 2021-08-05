@@ -106,7 +106,7 @@ exports.loginEmail = catchAsync(async (req, res, next) => {
 	const { email, password } = req.body;
 	if (!email || !password) {
 		// checking email or password empty?
-		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS, STATUS_CODE.BAD_REQUEST));
+		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS_EMAIL, STATUS_CODE.BAD_REQUEST));
 	}
 	const user = await User.findOne({ email: email }).select('+password');
 	if (!user) {
@@ -131,7 +131,7 @@ exports.loginPhone = catchAsync(async (req, res, next) => {
 
 	if (!phone || !password) {
 		// checking email or password empty?
-		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS, STATUS_CODE.BAD_REQUEST));
+		return next(new AppError(ERRORS.INVALID.NO_CREDENTIALS_PHONE, STATUS_CODE.BAD_REQUEST));
 	}
 	const user = await User.findOne({ phone: phone }).select('+password');
 	if (!user) {
